@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-brb1ig9ifaz#@z12izrn0zk04731!!r_y&3=-4h^9_2^kf#6jf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -130,8 +130,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Login / Logout
 LOGIN_REDIRECT_URL = 'backend'
 LOGOUT_REDIRECT_URL = 'frontend'
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://new-clientes-production.up.railway.app/',
-    'https://www.new-clientes-production.up.railway.app/'
-]
+if not DEBUG:
+    CSRF_TRUSTED_ORIGINS = [
+        'https://new-clientes-production.up.railway.app/',
+        'https://www.new-clientes-production.up.railway.app/'
+    ]
