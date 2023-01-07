@@ -1,0 +1,139 @@
+/*---------------------------------
+#        START CONFIGURATION      #
+---------------------------------*/
+html,
+body {
+  height: 100%;
+  margin: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/*---------------------------------
+#            NAV BAR              #
+---------------------------------*/
+
+#btn-nav {
+  width: 100px;
+  float: right;
+  margin-right: 25px;
+  color: #89cff0;
+  border: 1px solid #89cff0;
+}
+#btn-nav:hover {
+  background-color: #89cff0;
+  color: white;
+}
+/*---------------------------------
+#            FOOTER               #
+---------------------------------*/
+.wrapper {
+  min-height: 100%;
+  margin-bottom: -50px;
+}
+#footer,
+.push {
+  height: 50px;
+  font-size: 13px;
+}
+/*---------------------------------
+#            LOGIN               #
+---------------------------------*/
+#btn-enter {
+  width: 150px;
+  background-color: #cde3f9;
+  color: #0873a4;
+  border: 1px solid #0db2ff;
+  font-weight: bold;
+  font-size: 16px;
+  ;
+}
+
+.icon-width{
+  width: 40px;
+  
+}
+
+/*---------------------------------
+#            BACKEND              #
+---------------------------------*/
+.side-label {
+  width: 60px;
+}
+
+#no_data{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  font-size: 22px;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: rgb(226, 239, 249);
+ }
+
+form .form-control::-webkit-input-placeholder { 
+  color: #a3a3a3;
+  font-size: 14px;
+  font-style: italic;
+}
+
+form .form-control::-moz-placeholder {
+  color: #a3a3a3;
+  font-size: 14px;
+  font-style: italic;
+  
+}
+form .form-control:-ms-input-placeholder {
+  color: #a3a3a3;
+  font-size: 14px;
+  font-style: italic;
+}
+form .form-control:placeholder {
+  color: #a3a3a3;
+  font-size: 14px;
+  font-style: italic;
+}
+
+/*---------------------------------
+#            Sweet Alert          #
+---------------------------------*/
+.swal-text{
+  text-align: center;
+}
+
+.swal-icon--success:before,
+.swal-icon--success:after,
+.swal-icon--success__hide-corners{
+  background: none !important;
+}
+.swal-icon--success {
+  /* Color of the ring*/
+  border-color:#007bff ;
+}
+
+.swal-icon--success__line{
+  /* Color animation*/
+  background-color: #007bff;
+}
+
+.swal-button {
+  padding: 7px 19px;
+  border-radius: 5px;
+  background-color: #007bff;
+  font-size: 12px;
+  border: 1px solid #007bff;
+}
+
+.swal-button:focus {
+  box-shadow: none;
+}
+
+.swal-button:not([disabled]):hover {
+  background: transparent;
+  color: #111;
+  border: 1px solid #007bff;
+}

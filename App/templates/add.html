@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+<!-- Title on the browser tab -->
+{% block page-title %} Añadir Cliente {% endblock page-title %}
+
+
+{% block nav-content %}
+<i class="fas fa-user-plus" style="color: green"></i>&nbsp;&nbsp; Añadir Cliente 
+{% endblock nav-content %}
+
+<!-- Time Block -->
+{% block time %}
+<div class="col-sm">
+  <center>
+    <span id="clock" style="color: #89cff0;"></span>
+  </center>
+</div>
+{% endblock time %}
+
+<!-- BUTTON IN NAVBAR -->
+{% block btn-nav %}
+<a  class="btn btn-outline-danger btn-sm border-light" id="btn-nav" data-bs-toggle="modal" data-bs-target="#logoutModal" style="color: red" >LOGOUT</a>
+{% endblock btn-nav %}
+
+<!-- Page Content -->
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card card-body border-dark text-primary mt-5">
+        
+        <span class="text-center">{% block title %} DATOS DEL CLIENTE {% endblock title %}</span>
+        
+      </div>
+      <form
+        {% block action %}
+        action="/add_patient"
+        {% endblock action %}
+        method="POST"
+        autocomplete="off"
+        enctype="multipart/form-data"
+        class="card p-3 border-dark mt-3"
+      >
+        {% csrf_token %}
+        <div class="input-group input-group-sm mb-3">
+          <span class="input-group-text side-label">Name</span>
+          <input type="text" class="form-control" name="name" placeholder="Full Name" {% block Value-name %} {% endblock Value-name %}/>
+        </div>
+        <div class="input-group input-group-sm mb-3">
+          <span class="input-group-text side-label">Phone</span>
+          <input type="text" class="form-control" name="phone" placeholder="Phone:"{% block Value-phone %} {% endblock Value-phone %}/>
+        </div>
+        <div class="input-group input-group-sm mb-3">
+          <span class="input-group-text side-label">Email</span>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            placeholder="Email"
+            {% block Value-email %} {% endblock Value-email %}
+          />
+        </div>
+        <div class="input-group input-group-sm mb-3">
+          <span class="input-group-text side-label">Age</span>
+          <input
+            type="text"
+            class="form-control"
+            name="age"
+            placeholder="Age"
+            {% block Value-age %} {% endblock Value-age %}
+          />
+        </div>
+        <div class="input-group input-group-sm mb-3">
+          <label class="input-group-text side-label">Gender</label>
+          <select class="form-select" name="gender">
+            {% block option%}
+            <option value="" hidden>Select gender</option>
+            {% endblock option %}
+            <option disabled></option>
+            <option>M</option>
+            <option>F</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" name="note" rows="7" placeholder="Description..." >{% block note %}{% endblock note %}</textarea>
+        </div>
+        <div class="d-grid gap-2 mt-2" style="width: 70%; margin: 0 auto;">
+          <button type="submit" class="btn btn-primary btn-sm">
+            {% block btn-add%}
+            <i class="fas fa-plus"></i>&nbsp;&nbsp;Add
+            {% endblock btn-add%}
+          </button>
+
+          <!--Block  button Reset -->
+          {% block reset-btn %}{% endblock reset-btn %}
+
+
+          <a href="{% url 'backend' %}" class="btn btn-dark btn-sm"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Back</a>
+        </div>
+
+        <!-- Id hidden(denied here) -->
+        {% block id-hidden  %}
+        
+        {% endblock id-hidden %}
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

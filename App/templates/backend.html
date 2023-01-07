@@ -1,0 +1,178 @@
+{% extends 'base.html' %} 
+
+<!-- Title on the browser tab -->
+{% block page-title %} Todos los clientes {% endblock page-title %}
+
+<!-- Navbar content (icon + title) -->
+{% block nav-content %}
+<i class="fa-solid fa-people-group" style="color: #89cff0"></i>&nbsp;&nbsp;<span style="color: #89cff0">Clientes</span> 
+{% endblock nav-content %}
+
+<!-- Time Block -->
+{% block time %}
+<div class="col-sm">
+  <center>
+    <span id="clock" style="color: #89cff0;"></span>
+  </center>
+</div>
+{% endblock time %}
+
+<!-- BUTTON IN NAVBAR -->
+{% block btn-nav %}
+<a  class="btn btn-outline-danger btn-sm border-light" id="btn-nav" data-bs-toggle="modal" data-bs-target="#logoutModal" style="color: red" >LOGOUT</a>
+{% endblock btn-nav %}
+
+
+<!-- FOOTER BLOCK COLOR -->
+{% block footer %} style="color:#8bd7fb; text-decoration: none;" {% endblock footer %}
+
+<!--Page Content-->
+{% block content %}
+<div class="container">
+  <br />
+
+  <!-- Add Button and Get Username -->
+
+  <div class="d-flex justify-content-between">
+    <a href="{% url 'add_patient' %}" class="btn  btn-sm" style="color: #0db2ff; border: 1px solid #0db2ff;"
+      ><i class="fas fa-plus"></i>&nbsp;&nbsp;Nuevo Cliente</a
+    >
+    <span style="color: #0db2ff";>
+      Bienvenido:
+      <strong><span style="color: #0db2ff;">{{ user.get_username }}</span></strong>
+     
+    </span>
+  </div>
+
+  <!-- Input Search Button Search Button Reset -->
+
+  <form>
+    <div class="input-group input-group-sm mb-3 mt-4" >
+      <input
+        type="text"
+        name="q"
+        class="form-control"
+        placeholder="Buscar a..."
+        value="{{ request.GET.q }}"
+        style="border: 1px solid #0db2ff;"
+      />
+      <button class="btn " style="background-color: transparent; border: 1px solid #11a1e4; border-radius: 0px  4px 4px 0px; overflow: hidden;"><i class="fas fa-search"></i></button>
+      <a
+        href="{% url 'backend' %}"
+        class="btn btn-dark"
+        style="margin-left: 4px; border-radius:4px 4px 4px 4px; overflow: hidden;"
+        ><i class="fas fa-sync-alt"></i
+      ></a>
+    </div>
+  </form>
+
+  <!-- -----------------TABLE-------------------- -->
+  <center>
+    <table
+      class="table table-bordered table-sm mt-4  table-striped"
+      style="text-align: center; font-size: 14px; border:1px solid rgb(66, 185, 250)"
+    >
+      <thead style="background-color: #8bd7fb;">
+        <tr>
+          <th style="width: 21%;">Name</th>
+          <th style="width: 15%;">Phone</th>
+          <th style="width: 21%;">Email</th>
+          <th style="width: 8%;">Age</th>
+          <th style="width: 7%;">Gender</th>
+          <th style="width: 18%;">Registered</th>
+          <th  style="width: 10%;"colspan='2'> Actions</th>
+        </tr>
+      </thead>
+      <!-- Data from the backend------------------ -->
+      {% for patient in patients %}
+
+      <tr id="chk_td">
+        <td>{{ patient.name }}</td>
+        <td>{{ patient.phone }}</td>
+        <td>{{ patient.email }}</td>
+        <td>{{ patient.age }}</td>
+        <td>{{ patient.gender }}</td>
+        <td>{{ patient.created_at | date:'d/m/Y (H:i)'}}</td>
+        <td>
+          <a class="btn "  style=" background-color: #0db2ff; color: white;" href="/patient/{{ patient.id }}" title="Edit Client" >
+            <i class="fas fa-pen"></i>
+          </a>
+        </td>
+        <td>
+          <a class="btn" style="background-color: black; color: rgb(247, 35, 35);" title="Delete Client" data-bs-toggle="modal" data-bs-target="#deleteModal{{ patient.pk }}">
+            <i class="fas fa-trash-alt"></i>
+          </a>
+        </td>
+        
+      </tr>
+       <!-- Modal delete confitmation-->
+        <div class="modal fade" id="deleteModal{{ patient.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Borrar Cliente</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="text-center text-danger"><i class="far fa-times-circle fa-5x mb-4 mt-2"></i></div>
+                <div class="text-center text-danger">
+                  <span>Quieres borrar el cliente?</span>
+                  <div class="text-dark mt-3 mb-2">Cliente: <strong>{{ patient.name}}</strong></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <a href="/delete_patient/{{ patient.id }}" type="button" class="btn btn-outline-danger btn-sm">Borrar</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </table>
+  </center>
+
+
+  <!-- Pagination---------------------------------- -->
+
+  <nav class="mt-5">
+    {% if patients.has_other_pages %}
+    <ul class="pagination justify-content-left">
+      {% if patients.has_previous %}
+      <a href="?page=1"class="btn btn-outline-primary mb-4" style="width: 60px; border-radius: 1px; border: 1px solid #d3d3d3">First</a>
+      <li class="page-item"><a href="?page={{ patients.previous_page_number }}" class="page-link"><i class="fas fa-angle-double-left"></i></a></li>
+      {% else %}
+      <li class="page-item-disabled"></li>
+      {% endif %} 
+
+      {% for i in patients.paginator.page_range %} 
+          {% if patients.number == i %}
+          <li class="page-item active"><span class="page-link">{{ i }}<span class="sr-only"></span></span></li>
+          {% else %}
+          <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+          {% endif %} 
+      {% endfor %} 
+      
+      {% if patients.has_next %}
+      <li class="page-item"><a href="?page={{ patients.next_page_number }}" class="page-link"><i class="fas fa-angle-double-right"></i></a></li>
+      <a href="?page={{ patients.paginator.num_pages }}" class="btn btn-outline-primary mb-4" style="width: 60px;border-radius: 1px;border: 1px solid #d3d3d3;border-left: none;">Last</a>
+      {% else %}
+      <li class="page-item-disabled"></li>
+      {% endif %}
+    </ul>
+    {% endif %}
+  </nav>
+
+  {% for message in messages %} {% if message.tags == 'success' %}
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script>
+    var m = "{{ message }}";
+    swal("Perfect!!", m, "success");
+  </script>
+  {% endif %}
+  {% endfor %}
+</div>
+
+<!-- If no client show this span -->
+
+<span class="text-danger" id="no_data"></span>
+{% endblock %}
