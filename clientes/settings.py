@@ -132,5 +132,6 @@ LOGIN_REDIRECT_URL = 'backend'
 LOGOUT_REDIRECT_URL = 'frontend'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://new-clientes-production.up.railway.app/'
+    'https://new-clientes-production.up.railway.app/',
+    'https://www.new-clientes-production.up.railway.app/'
 ]
